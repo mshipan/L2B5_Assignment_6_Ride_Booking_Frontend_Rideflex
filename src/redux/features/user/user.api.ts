@@ -30,6 +30,15 @@ export const userApi = baseApi.injectEndpoints({
         meta: response.meta,
       }),
     }),
+
+    getSingleUserInfo: builder.query<IResponse<IUser>, string>({
+      query: (userId) => ({
+        url: `/user/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["USER"],
+    }),
+
     setUserStatus: builder.mutation<
       IUser,
       { userId: string; isActive: TUserStatus }
@@ -71,6 +80,7 @@ export const userApi = baseApi.injectEndpoints({
 export const {
   useUserInfoQuery,
   useAllUsersQuery,
+  useGetSingleUserInfoQuery,
   useSetUserStatusMutation,
   useSetUserApprovalStatusMutation,
   useUpdateProfileMutation,

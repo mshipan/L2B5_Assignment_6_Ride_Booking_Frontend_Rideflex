@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Card,
   CardContent,
@@ -24,7 +25,10 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-// import { useState } from "react";
+import { useState } from "react";
+import { useResetPasswordMutation } from "@/redux/features/auth/auth.api";
+import { Eye, EyeOff } from "lucide-react";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const profileSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -64,9 +68,12 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
 
 export default function ProfileContent({ user }: { user: IUser }) {
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [resetPassword, { isLoading: isResetting }] = useResetPasswordMutation();
-
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+  const [resetPassword, { isLoading: isResetLoading, error }] =
+    useResetPasswordMutation();
+  console.log("reset error", error);
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
   const form = useForm<ProfileFormValues>({
@@ -113,14 +120,29 @@ export default function ProfileContent({ user }: { user: IUser }) {
   const onResetPassword = async (values: ResetPasswordValues) => {
     const toastId = toast.loading("Resetting password...");
     try {
-      // await resetPassword({ id: user._id, body: values }).unwrap();
+      await resetPassword({
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      }).unwrap();
       toast.success("Password reset successfully", { id: toastId });
       passwordForm.reset();
     } catch (err) {
-      const error = err as { data?: IErrorResponse };
-      toast.error(error?.data?.message || "Failed to reset password", {
-        id: toastId,
-      });
+      let message = "Failed to reset password";
+
+      if ((err as FetchBaseQueryError)?.status) {
+        const fetchError = err as FetchBaseQueryError;
+
+        if (
+          "data" in fetchError &&
+          fetchError.data &&
+          typeof fetchError.data === "object"
+        ) {
+          message = (fetchError.data as any).message || message;
+        }
+      } else if ((err as any)?.message) {
+        message = (err as any).message;
+      }
+      toast.error(message, { id: toastId });
     }
   };
 
@@ -279,7 +301,19 @@ export default function ProfileContent({ user }: { user: IUser }) {
                     <FormItem>
                       <FormLabel>Current Password</FormLabel>
                       <FormControl>
-                        <Input type="password" {...field} />
+                        <div className="relative">
+                          <Input
+                            type={showCurrentPassword ? "text" : "password"}
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowCurrentPassword((p) => !p)}
+                            className="absolute right-2 top-2 text-gray-500"
+                          >
+                            {showCurrentPassword ? <EyeOff /> : <Eye />}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -292,7 +326,19 @@ export default function ProfileContent({ user }: { user: IUser }) {
                     <FormItem>
                       <FormLabel>New Password</FormLabel>
                       <FormControl>
-                        <Input type="password" {...field} />
+                        <div className="relative">
+                          <Input
+                            type={showNewPassword ? "text" : "password"}
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowNewPassword((p) => !p)}
+                            className="absolute right-2 top-2 text-gray-500"
+                          >
+                            {showNewPassword ? <EyeOff /> : <Eye />}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -305,7 +351,19 @@ export default function ProfileContent({ user }: { user: IUser }) {
                     <FormItem>
                       <FormLabel>Confirm New Password</FormLabel>
                       <FormControl>
-                        <Input type="password" {...field} />
+                        <div className="relative">
+                          <Input
+                            type={showConfirmNewPassword ? "text" : "password"}
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowConfirmNewPassword((p) => !p)}
+                            className="absolute right-2 top-2 text-gray-500"
+                          >
+                            {showConfirmNewPassword ? <EyeOff /> : <Eye />}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -313,10 +371,10 @@ export default function ProfileContent({ user }: { user: IUser }) {
                 />
                 <Button
                   type="submit"
-                  // disabled={isResetting}
+                  disabled={isResetLoading}
+                  className="cursor-pointer"
                 >
-                  {/* {isResetting ? "Resetting..." : "Reset Password"} */}
-                  Reset Password
+                  {isResetLoading ? "Resetting..." : "Reset Password"}
                 </Button>
               </CardContent>
             </Card>

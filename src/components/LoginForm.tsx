@@ -48,7 +48,7 @@ export function LoginForm({
       const error = err as { data?: IErrorResponse };
       console.error(error);
 
-      if (error?.data?.message === "Password do not match") {
+      if (error?.data?.success === false) {
         toast.error("Invalid credentials", {
           id: toastId,
         });

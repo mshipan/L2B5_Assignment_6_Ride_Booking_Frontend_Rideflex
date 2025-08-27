@@ -8,7 +8,7 @@ const baseApi = createApi({
   //   baseUrl: import.meta.env.VITE_BASE_API_URL,
   //   credentials: "include",
   // }),
-  tagTypes: ["USER"],
+  tagTypes: ["USER", "RIDES"],
   endpoints: () => ({}),
 });
 

@@ -19,6 +19,7 @@ const MainLayout = () => {
     { href: "/contact", label: "Contact", role: "PUBLIC" },
     { href: "/faq", label: "FAQ", role: "PUBLIC" },
     { href: "/admin", label: "Dashboard", role: role.ADMIN },
+    { href: "/request-a-ride", label: "Request Ride", role: role.RIDER },
     { href: "/rider", label: "Dashboard", role: role.RIDER },
     { href: "/driver", label: "Dashboard", role: role.DRIVER },
   ];

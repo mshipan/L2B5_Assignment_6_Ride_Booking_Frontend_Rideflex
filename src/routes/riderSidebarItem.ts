@@ -1,3 +1,4 @@
+import MyRides from "@/pages/rider/MyRides";
 import type { ISidebarItems } from "@/types";
 import { lazy } from "react";
 
@@ -14,21 +15,16 @@ export const riderSidebarItems: ISidebarItems[] = [
       },
     ],
   },
-  //   {
-  //     title: "Rides",
-  //     items: [
-  //       {
-  //         title: "Book a Ride",
-  //         url: "/dashboard/rider/book-ride",
-  //         component: RideBooking,
-  //       },
-  //       {
-  //         title: "Ride History",
-  //         url: "/dashboard/rider/history",
-  //         component: RideHistory,
-  //       },
-  //     ],
-  //   },
+  {
+    title: "Rides",
+    items: [
+      {
+        title: "My Rides",
+        url: "/rider/my-ride",
+        component: MyRides,
+      },
+    ],
+  },
   //   {
   //     title: "Payments",
   //     items: [

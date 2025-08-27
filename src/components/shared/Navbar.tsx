@@ -62,10 +62,13 @@ export default function Navbar({ navigationLinks }: NavbarProps) {
         <nav className="hidden md:flex flex-1 justify-center">
           <NavigationMenu>
             <NavigationMenuList className="flex gap-6">
-              {navigationLinks.map((link, index) => (
-                <>
-                  {link.role === "PUBLIC" && (
-                    <NavigationMenuItem key={index}>
+              {navigationLinks.map((link, index) => {
+                if (
+                  link.role === "PUBLIC" ||
+                  link.role === userData?.data?.role
+                ) {
+                  return (
+                    <NavigationMenuItem key={link.href + index}>
                       <Link
                         to={link.href}
                         className="text-muted-foreground hover:text-primary py-1.5 font-medium"
@@ -73,19 +76,10 @@ export default function Navbar({ navigationLinks }: NavbarProps) {
                         {link.label}
                       </Link>
                     </NavigationMenuItem>
-                  )}
-                  {link.role === userData?.data?.role && (
-                    <NavigationMenuItem key={index}>
-                      <Link
-                        to={link.href}
-                        className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                      >
-                        {link.label}
-                      </Link>
-                    </NavigationMenuItem>
-                  )}
-                </>
-              ))}
+                  );
+                }
+                return null;
+              })}
             </NavigationMenuList>
           </NavigationMenu>
         </nav>

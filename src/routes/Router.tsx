@@ -17,6 +17,7 @@ import type { TRole } from "@/types";
 import UnAuthorized from "@/pages/unauthorized/UnAuthorized";
 import ProfilePage from "@/pages/profile/ProfilePage";
 import { driverSidebarItems } from "./driverSidebarItems";
+import RequestRide from "@/pages/requestRide/RequestRide";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/features", Component: Features },
       { path: "/contact", Component: Contact },
       { path: "/faq", Component: FAQ },
+      { path: "/request-a-ride", Component: RequestRide },
     ],
   },
   {

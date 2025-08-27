@@ -54,3 +54,39 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
 }
+
+// rides
+
+export type RideStatus =
+  | "REQUESTED"
+  | "ACCEPTED"
+  | "PICKED_UP"
+  | "IN_TRANSIT"
+  | "COMPLETED"
+  | "CANCELLED";
+
+export interface IRide {
+  _id: string;
+  rider: string | IUser;
+  driver?: string | IUser;
+  pickupLocation: string;
+  destinationLocation: string;
+  fare?: number;
+  distanceInKm?: number;
+  durationInMinutes?: number;
+  status?: RideStatus;
+  requestedAt?: string;
+  accepteddAt?: string;
+  pickedUpAt?: string;
+  transitStartedAt?: string;
+  completedAt?: string;
+  cancelledAt?: string;
+}
+
+export interface RideQueryParams {
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+  page: number;
+  limit: number;
+}
