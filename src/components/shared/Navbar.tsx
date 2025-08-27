@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import {
@@ -14,12 +13,40 @@ import {
 import type { NavigationLink } from "@/layouts/MainLayout";
 import { Link } from "react-router";
 import { ModeToggler } from "./ModeToggler";
+import { authApi, useLogoutMutation } from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
+import { toast } from "sonner";
+import type { IErrorResponse } from "@/types";
+import { useUserInfoQuery } from "@/redux/features/user/user.api";
 
 interface NavbarProps {
   navigationLinks: NavigationLink[];
 }
 
 export default function Navbar({ navigationLinks }: NavbarProps) {
+  const { data: userData } = useUserInfoQuery(undefined);
+
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogOut = async () => {
+    const toastId = toast.loading("Logging Out...");
+
+    try {
+      const res = await logout(undefined).unwrap();
+
+      dispatch(authApi.util.resetApiState());
+
+      if (res.success) {
+        toast.success("Logged out successfully!", { id: toastId });
+      }
+    } catch (err) {
+      const error = err as { data?: IErrorResponse };
+      console.error(error);
+      toast.error(error?.data?.message || "Logout failed");
+    }
+  };
+
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between container mx-auto">
@@ -36,15 +63,28 @@ export default function Navbar({ navigationLinks }: NavbarProps) {
           <NavigationMenu>
             <NavigationMenuList className="flex gap-6">
               {navigationLinks.map((link, index) => (
-                <NavigationMenuItem key={index}>
-                  <NavigationMenuLink
-                    active={link.active}
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                  >
-                    {link.label}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
+                <>
+                  {link.role === "PUBLIC" && (
+                    <NavigationMenuItem key={index}>
+                      <Link
+                        to={link.href}
+                        className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuItem>
+                  )}
+                  {link.role === userData?.data?.role && (
+                    <NavigationMenuItem key={index}>
+                      <Link
+                        to={link.href}
+                        className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuItem>
+                  )}
+                </>
               ))}
             </NavigationMenuList>
           </NavigationMenu>
@@ -54,12 +94,25 @@ export default function Navbar({ navigationLinks }: NavbarProps) {
           {/* Right side: Buttons */}
           <div className="flex items-center gap-2">
             <ModeToggler />
-            <Button asChild variant="ghost" size="sm" className="text-sm">
-              <Link to="/login">Log In</Link>
-            </Button>
-            <Button asChild size="sm" className="text-sm">
-              <Link to="/register">Register</Link>
-            </Button>
+            {userData?.data?.email && (
+              <Button
+                onClick={handleLogOut}
+                variant="outline"
+                className="cursor-pointer"
+              >
+                Logout
+              </Button>
+            )}
+            {!userData?.data?.email && (
+              <>
+                <Button asChild variant="ghost" size="sm" className="text-sm">
+                  <Link to="/login">Log In</Link>
+                </Button>
+                <Button asChild size="sm" className="text-sm">
+                  <Link to="/register">Register</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu trigger */}
@@ -91,13 +144,9 @@ export default function Navbar({ navigationLinks }: NavbarProps) {
                   <NavigationMenuList className="flex-col gap-2">
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index} className="w-full">
-                        <NavigationMenuLink
-                          href={link.href}
-                          className="py-1.5"
-                          active={link.active}
-                        >
+                        <Link to={link.href} className="py-1.5">
                           {link.label}
-                        </NavigationMenuLink>
+                        </Link>
                       </NavigationMenuItem>
                     ))}
                   </NavigationMenuList>

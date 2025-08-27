@@ -118,3 +118,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.swiper-pagination-custom .swiper-pagination-bullet {
+  @apply w-3 h-3 rounded-full bg-gray-400 opacity-50 transition-all;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active {
+  @apply bg-primary opacity-100 w-6 rounded-full;
+}
