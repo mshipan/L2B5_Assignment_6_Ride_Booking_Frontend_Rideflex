@@ -52,6 +52,22 @@ export const ridesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["RIDES"],
     }),
+
+    cancelRide: builder.mutation<IResponse<IRide>, string>({
+      query: (rideId) => ({
+        url: `/rides/${rideId}/cancel`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["RIDES"],
+    }),
+
+    getRiderRideHistory: builder.query<IResponse<IRide[]>, void>({
+      query: () => ({
+        url: "/rides/rider-history",
+        method: "GET",
+      }),
+      providesTags: ["RIDES"],
+    }),
   }),
 });
 
@@ -61,4 +77,6 @@ export const {
   useEstimateFareMutation,
   useGetMyRidesQuery,
   useGetRideDetailsQuery,
+  useCancelRideMutation,
+  useGetRiderRideHistoryQuery,
 } = ridesApi;

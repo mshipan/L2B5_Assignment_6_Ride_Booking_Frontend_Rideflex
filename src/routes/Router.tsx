@@ -18,6 +18,7 @@ import UnAuthorized from "@/pages/unauthorized/UnAuthorized";
 import ProfilePage from "@/pages/profile/ProfilePage";
 import { driverSidebarItems } from "./driverSidebarItems";
 import RequestRide from "@/pages/requestRide/RequestRide";
+import AvailableRides from "@/pages/availableRides/AvailableRides";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,14 @@ const router = createBrowserRouter([
       { path: "/features", Component: Features },
       { path: "/contact", Component: Contact },
       { path: "/faq", Component: FAQ },
-      { path: "/request-a-ride", Component: RequestRide },
+      {
+        path: "/request-a-ride",
+        Component: withAuth(RequestRide, role.RIDER as TRole),
+      },
+      {
+        path: "/available-rides",
+        Component: withAuth(AvailableRides, role.DRIVER as TRole),
+      },
     ],
   },
   {

@@ -75,6 +75,7 @@ export interface IRide {
   distanceInKm?: number;
   durationInMinutes?: number;
   status?: RideStatus;
+  createdAt?: string;
   requestedAt?: string;
   accepteddAt?: string;
   pickedUpAt?: string;

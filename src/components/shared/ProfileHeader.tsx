@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Mail, MapPin } from "lucide-react";
 import type { IResponse, IUser } from "@/types";
 import { format } from "date-fns";
+import AvailabilityToggle from "./AvailabilityToggle";
 
 interface ProfileHeaderProps {
   userData: IResponse<IUser>;
@@ -18,7 +19,12 @@ export default function ProfileHeader({ userData }: ProfileHeaderProps) {
               <h1 className="text-2xl font-bold">
                 {userData?.data?.name || "No Name"}
               </h1>
-              <Badge variant="secondary">{userData?.data?.isActive}</Badge>
+
+              {userData?.data?.role === "DRIVER" && (
+                <AvailabilityToggle
+                  initialOnline={userData?.data?.isOnline ?? false}
+                />
+              )}
             </div>
             <div className="flex flex-col md:flex-row md:items-center gap-4">
               <div className="text-muted-foreground">
@@ -30,6 +36,7 @@ export default function ProfileHeader({ userData }: ProfileHeaderProps) {
                 <Badge variant="secondary">
                   {userData?.data?.approvalStatus}
                 </Badge>{" "}
+                <Badge variant="secondary">{userData?.data?.isActive}</Badge>
               </div>
             </div>
             <div className="text-muted-foreground flex flex-wrap gap-4 text-sm">
@@ -51,14 +58,31 @@ export default function ProfileHeader({ userData }: ProfileHeaderProps) {
             </div>
           </div>
 
-          <Badge
-            variant="default"
-            className={`px-4 py-2 ${
-              userData?.data?.isVerified ? "bg-blue-600" : "bg-red-600"
-            }  text-white`}
-          >
-            {userData?.data?.isVerified ? "Verified" : "Not Verified"}
-          </Badge>
+          <div className="flex flex-col gap-2 items-end">
+            {userData?.data?.role !== "DRIVER" && (
+              <Badge
+                variant="default"
+                className={`px-4 py-2 ${
+                  userData?.data?.isVerified ? "bg-blue-600" : "bg-red-600"
+                }  text-white`}
+              >
+                {userData?.data?.isVerified ? "Verified" : "Not Verified"}
+              </Badge>
+            )}
+
+            {userData?.data?.role === "DRIVER" && (
+              <Badge
+                variant="outline"
+                className={`px-4 py-2 ${
+                  userData?.data?.isOnline
+                    ? "text-green-400 border-green-400"
+                    : "text-gray-400 border-gray-400"
+                }`}
+              >
+                {userData?.data?.isOnline ? "Online" : "Offline"}
+              </Badge>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

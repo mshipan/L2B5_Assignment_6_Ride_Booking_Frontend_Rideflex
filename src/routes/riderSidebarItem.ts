@@ -1,4 +1,5 @@
 import MyRides from "@/pages/rider/MyRides";
+import RiderHistoryPage from "@/pages/rider/RiderHistoryPage";
 import type { ISidebarItems } from "@/types";
 import { lazy } from "react";
 
@@ -22,6 +23,11 @@ export const riderSidebarItems: ISidebarItems[] = [
         title: "My Rides",
         url: "/rider/my-ride",
         component: MyRides,
+      },
+      {
+        title: "Ride History",
+        url: "/rider/ride-history",
+        component: RiderHistoryPage,
       },
     ],
   },

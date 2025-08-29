@@ -22,6 +22,7 @@ const MainLayout = () => {
     { href: "/request-a-ride", label: "Request Ride", role: role.RIDER },
     { href: "/rider", label: "Dashboard", role: role.RIDER },
     { href: "/driver", label: "Dashboard", role: role.DRIVER },
+    { href: "/available-rides", label: "Rides", role: role.DRIVER },
   ];
   return (
     <div className="min-h-screen flex flex-col">

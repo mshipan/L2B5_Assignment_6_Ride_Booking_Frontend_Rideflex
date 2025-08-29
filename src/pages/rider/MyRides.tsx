@@ -23,11 +23,13 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  useCancelRideMutation,
   useGetMyRidesQuery,
   useGetRideDetailsQuery,
 } from "@/redux/features/rides/rides.api";
 import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const MyRides = () => {
   const [selectedRideId, setSelectedRideId] = useState<string>("");
@@ -41,6 +43,17 @@ const MyRides = () => {
     refetch,
   } = useGetRideDetailsQuery(selectedRideId);
 
+  const [cancelRide, { isLoading: cancelLoading }] = useCancelRideMutation();
+
+  const handleCancelRide = async (rideId: string) => {
+    try {
+      await cancelRide(rideId).unwrap();
+      toast.success("Ride cancelled successfully!");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to cancel ride");
+    }
+  };
+
   useEffect(() => {
     if (selectedRideId) {
       refetch();
@@ -52,8 +65,6 @@ const MyRides = () => {
       setLocalRideData(rideDetails.data);
     }
   }, [rideDetails]);
-
-  console.log("ggg", rideDetails);
 
   const rideStatuses = [
     "ALL",
@@ -237,7 +248,8 @@ const MyRides = () => {
                                     <Button
                                       variant="destructive"
                                       size="sm"
-                                      // onClick={() => handleCancelRide(ride._id)}
+                                      disabled={cancelLoading}
+                                      onClick={() => handleCancelRide(ride._id)}
                                     >
                                       Cancel
                                     </Button>

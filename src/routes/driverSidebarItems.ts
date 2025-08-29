@@ -1,3 +1,4 @@
+import DriverRide from "@/pages/driver/DriverRide";
 import type { ISidebarItems } from "@/types";
 import { lazy } from "react";
 
@@ -14,21 +15,21 @@ export const driverSidebarItems: ISidebarItems[] = [
       },
     ],
   },
-  //   {
-  //     title: "Rides",
-  //     items: [
-  //       {
-  //         title: "Book a Ride",
-  //         url: "/dashboard/rider/book-ride",
-  //         component: RideBooking,
-  //       },
-  //       {
-  //         title: "Ride History",
-  //         url: "/dashboard/rider/history",
-  //         component: RideHistory,
-  //       },
-  //     ],
-  //   },
+  {
+    title: "Manage Rides",
+    items: [
+      {
+        title: "Active Ride",
+        url: "/driver/active-rides",
+        component: DriverRide,
+      },
+      // {
+      //   title: "Ride History",
+      //   url: "/rider/ride-history",
+      //   component: RiderHistoryPage,
+      // },
+    ],
+  },
   //   {
   //     title: "Payments",
   //     items: [

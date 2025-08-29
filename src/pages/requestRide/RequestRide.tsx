@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import EstimateFareDialog from "@/components/pages/requestRide/EstimateFareDialog";
+import RideSuccessModal from "@/components/shared/RideSuccessModal";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,13 +9,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -159,24 +153,14 @@ const RequestRide = () => {
       />
 
       {/* Success Modal */}
-      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Ride Status</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 text-center">
-            <p>Your ride has been requested successfully!</p>
-          </div>
-          <DialogFooter>
-            <Button
-              onClick={redirectToActiveRides}
-              className="w-full cursor-pointer"
-            >
-              Go to Active Rides
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <RideSuccessModal
+        open={showSuccessModal}
+        onOpenChange={setShowSuccessModal}
+        title="Ride Status"
+        message="Your ride has been requested successfully!"
+        buttonLabel=" Go to Active Rides"
+        onButtonClick={redirectToActiveRides}
+      />
 
       {/* More Section */}
       <section className="max-w-5xl mx-auto">
