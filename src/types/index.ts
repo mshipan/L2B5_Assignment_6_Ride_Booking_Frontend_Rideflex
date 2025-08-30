@@ -91,3 +91,11 @@ export interface RideQueryParams {
   page: number;
   limit: number;
 }
+
+export interface DriverHistoryParams {
+  page: number;
+  limit: number;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}

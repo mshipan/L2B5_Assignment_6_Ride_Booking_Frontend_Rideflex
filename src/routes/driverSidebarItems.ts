@@ -1,3 +1,4 @@
+import DriverHistory from "@/pages/driver/DriverHistory";
 import DriverRide from "@/pages/driver/DriverRide";
 import type { ISidebarItems } from "@/types";
 import { lazy } from "react";
@@ -22,6 +23,11 @@ export const driverSidebarItems: ISidebarItems[] = [
         title: "Active Ride",
         url: "/driver/active-rides",
         component: DriverRide,
+      },
+      {
+        title: "Ride History",
+        url: "/driver/ride-history",
+        component: DriverHistory,
       },
       // {
       //   title: "Ride History",

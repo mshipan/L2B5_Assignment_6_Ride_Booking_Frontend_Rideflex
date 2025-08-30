@@ -1,4 +1,4 @@
-import type { IResponse, IRide, IUser } from "@/types";
+import type { DriverHistoryParams, IResponse, IRide, IUser } from "@/types";
 import baseApi from "../baseApi";
 
 export const driverApi = baseApi.injectEndpoints({
@@ -60,10 +60,14 @@ export const driverApi = baseApi.injectEndpoints({
       invalidatesTags: ["DRIVER", "RIDES"],
     }),
 
-    getDriverRideHistory: builder.query<IResponse<IRide[]>, void>({
-      query: () => ({
+    getDriverRideHistory: builder.query<
+      IResponse<IRide[]>,
+      DriverHistoryParams | void
+    >({
+      query: (params) => ({
         url: "/rides/driver-history",
         method: "GET",
+        params,
       }),
       providesTags: ["DRIVER", "RIDES"],
     }),
