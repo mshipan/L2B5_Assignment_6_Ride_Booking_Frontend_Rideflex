@@ -10,8 +10,8 @@ export const adminSidebarItems: ISidebarItems[] = [
     title: "Dashboard",
     items: [
       {
-        title: "Home",
-        url: "/admin/home",
+        title: "Analytics",
+        url: "/admin/analytics",
         component: AdminHome,
       },
     ],

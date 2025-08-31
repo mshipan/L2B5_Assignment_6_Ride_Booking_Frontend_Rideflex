@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     path: "/admin",
     Component: withAuth(DashboardLayout, role.ADMIN as TRole),
     children: [
-      { index: true, element: <Navigate to="/admin/home" /> },
+      { index: true, element: <Navigate to="/admin/analytics" /> },
       { path: "/admin/profile", Component: ProfilePage },
       ...generateRoutes(adminSidebarItems),
     ],
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
     path: "/rider",
     Component: withAuth(DashboardLayout, role.RIDER as TRole),
     children: [
-      { index: true, element: <Navigate to="/rider/home" /> },
+      { index: true, element: <Navigate to="/rider/analytics" /> },
       { path: "/rider/profile", Component: ProfilePage },
       ...generateRoutes(riderSidebarItems),
     ],

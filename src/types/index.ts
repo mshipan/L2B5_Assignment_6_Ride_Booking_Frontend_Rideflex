@@ -99,3 +99,77 @@ export interface DriverHistoryParams {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
 }
+
+export interface AdminDashboard {
+  userSummary: {
+    totalRiders: number;
+    totalDrivers: number;
+    activeDrivers: number;
+    suspendedDrivers: number;
+    blockedRiders: number;
+  };
+  rideSummary: {
+    totalRides: number;
+    completedRides: number;
+    cancelledRides: number;
+    ongoingRides: number;
+  };
+  revenueSummary: {
+    today: number;
+    week: number;
+    month: number;
+    total: number;
+  };
+  driverActivity: {
+    topDriversByRides: { driver: { name: string }; rides: number }[];
+    topDriversByEarnings: { driver: { name: string }; earnings: number }[];
+  };
+  recentActivity: {
+    _id: string;
+    status: string;
+    fare: number;
+    createdAt: string;
+    rider?: { name: string };
+    driver?: { name: string };
+  }[];
+}
+
+export interface RiderDashboard {
+  rideSummary: {
+    total: number;
+    completed: number;
+    cancelled: number;
+    active: number;
+  };
+  riderStatus: {
+    inActiveRide: boolean;
+    activeRideId?: string;
+  };
+  spendingSummary: {
+    today: number;
+    week: number;
+    month: number;
+    total: number;
+  };
+  recentActivity: {
+    _id: string;
+    driver: { name: string };
+    status: string;
+    fare: number;
+    createdAt: string;
+  }[];
+}
+
+export interface DriverDashboard {
+  totalRides: number;
+  completedRides: number;
+  cancelledRides: number;
+  totalEarnings: number;
+  recentRides: {
+    _id: string;
+    status: string;
+    fare: number;
+    createdAt: string;
+    rider?: { name: string };
+  }[];
+}

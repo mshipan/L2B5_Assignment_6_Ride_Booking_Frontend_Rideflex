@@ -1,4 +1,11 @@
-import type { IResponse, IRide, RideQueryParams } from "@/types";
+import type {
+  AdminDashboard,
+  DriverDashboard,
+  IResponse,
+  IRide,
+  RideQueryParams,
+  RiderDashboard,
+} from "@/types";
 import baseApi from "../baseApi";
 
 export const ridesApi = baseApi.injectEndpoints({
@@ -68,6 +75,30 @@ export const ridesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["RIDES"],
     }),
+
+    getAdminDashboard: builder.query<IResponse<AdminDashboard>, void>({
+      query: () => ({
+        url: "/rides/admin-dashboard",
+        method: "GET",
+      }),
+      providesTags: ["USER", "RIDES", "DRIVER"],
+    }),
+
+    getRiderDashboard: builder.query<IResponse<RiderDashboard>, void>({
+      query: () => ({
+        url: "/rides/rider-dashboard",
+        method: "GET",
+      }),
+      providesTags: ["USER", "RIDES", "DRIVER"],
+    }),
+
+    getDriverDashboard: builder.query<IResponse<DriverDashboard>, void>({
+      query: () => ({
+        url: "/rides/driver-dashboard",
+        method: "GET",
+      }),
+      providesTags: ["USER", "RIDES", "DRIVER"],
+    }),
   }),
 });
 
@@ -79,4 +110,7 @@ export const {
   useGetRideDetailsQuery,
   useCancelRideMutation,
   useGetRiderRideHistoryQuery,
+  useGetAdminDashboardQuery,
+  useGetRiderDashboardQuery,
+  useGetDriverDashboardQuery,
 } = ridesApi;

@@ -10,8 +10,8 @@ export const riderSidebarItems: ISidebarItems[] = [
     title: "Dashboard",
     items: [
       {
-        title: "Home",
-        url: "/rider/home",
+        title: "Analytics",
+        url: "/rider/analytics",
         component: RiderHome,
       },
     ],
