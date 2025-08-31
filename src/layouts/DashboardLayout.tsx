@@ -23,7 +23,7 @@ import { toast } from "sonner";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
-  const { data: user } = useUserInfoQuery(undefined);
+  const { data: user, isLoading } = useUserInfoQuery(undefined);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
@@ -67,7 +67,7 @@ export default function DashboardLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 justify-between">
+        <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b px-4 justify-between bg-sidebar">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
 
@@ -76,16 +76,20 @@ export default function DashboardLayout() {
               className="mr-2 data-[orientation=vertical]:h-4"
             />
 
-            <div>
-              <h1>
-                {user?.data?.role === "ADMIN"
-                  ? "Admin "
-                  : user?.data?.role === "RIDER"
-                  ? "Rider "
-                  : "Driver "}
-                Dashboard
-              </h1>
-            </div>
+            {isLoading ? (
+              <h1>Dashboard</h1>
+            ) : (
+              <div>
+                <h1>
+                  {user?.data?.role === "ADMIN"
+                    ? "Admin "
+                    : user?.data?.role === "RIDER"
+                    ? "Rider "
+                    : "Driver "}
+                  Dashboard
+                </h1>
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-4">
             {/* Role-based Welcome Button */}

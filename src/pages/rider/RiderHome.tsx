@@ -93,7 +93,7 @@ const RiderHome = () => {
     <div>
       <PageBreadcrumb title="Dashboard" pageTitle="Analytics" />
       <div className="flex flex-col mt-6 gap-4">
-        <h1 className="text-2xl font-bold">Rider Dashboard</h1>
+        <h1 className="text-2xl font-bold">Analytics</h1>
         {dashboard?.riderStatus?.inActiveRide && myRides?.data && (
           <Card className="border-orange-500 shadow-lg">
             <CardHeader>
