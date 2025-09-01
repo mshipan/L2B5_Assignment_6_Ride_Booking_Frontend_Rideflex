@@ -10,8 +10,8 @@ export const driverSidebarItems: ISidebarItems[] = [
     title: "Dashboard",
     items: [
       {
-        title: "Home",
-        url: "/driver/home",
+        title: "Analytics",
+        url: "/driver/analytics",
         component: DriverHome,
       },
     ],

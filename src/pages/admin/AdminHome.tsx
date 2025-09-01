@@ -1,6 +1,6 @@
 import RecentActivity from "@/components/pages/admin/adminHome/RecentActivity";
 import RevenueChart from "@/components/pages/admin/adminHome/RevenueChart";
-import RideOverViewStats from "@/components/pages/admin/adminHome/RideOverVIewStats";
+import RideOverViewStats from "@/components/pages/admin/adminHome/RideOverViewStats";
 import RideSummaryPieChart from "@/components/pages/admin/adminHome/RideSummaryPieChart";
 import TopDriverByEarning from "@/components/pages/admin/adminHome/TopDriverByEarning";
 import PageBreadcrumb from "@/components/shared/PageBreadcrumb";

@@ -11,6 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 
+type ContactFormValues = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
 const Contact = () => {
   const form = useForm({
     // resolver: zodResolver(contactSchema),
@@ -22,7 +29,7 @@ const Contact = () => {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: ContactFormValues) => {
     console.log("Form submitted:", data);
     console.log(data);
   };

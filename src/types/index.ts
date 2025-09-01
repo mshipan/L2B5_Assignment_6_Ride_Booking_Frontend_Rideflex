@@ -161,15 +161,17 @@ export interface RiderDashboard {
 }
 
 export interface DriverDashboard {
-  totalRides: number;
-  completedRides: number;
-  cancelledRides: number;
-  totalEarnings: number;
-  recentRides: {
-    _id: string;
-    status: string;
-    fare: number;
-    createdAt: string;
-    rider?: { name: string };
-  }[];
+  rideSummary: {
+    total: number;
+    completed: number;
+    cancelled: number;
+    active: number;
+  };
+  earningsSummary: {
+    today: number;
+    week: number;
+    month: number;
+    total: number;
+  };
+  driverStatus: { isOnline: boolean };
 }

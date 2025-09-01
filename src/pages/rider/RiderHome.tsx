@@ -47,7 +47,7 @@ const RiderHome = () => {
   );
 
   const dashboard = data?.data;
-  console.log("dddd", dashboard);
+
   const rideDetails = rideData?.data;
 
   const { data: myRides } = useGetRideDetailsQuery(
